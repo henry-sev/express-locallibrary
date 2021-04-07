@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 //创建作者模型
 const Schema = mongoose.Schema;
@@ -10,17 +11,31 @@ const AuthorSchema = new Schema({
 })
 
 //创建作者模型虚拟属性：name, lifespan, url
+// AuthorSchema
+//   .virtual('name')
+//   .get(() => {return this.first_name + this.family_name});
+
 AuthorSchema
   .virtual('name')
-  .get(() => this.first_name + this.family_name);
+  .get(function() {return this.family_name + ', ' + this.first_name});
+  //为什么回调简写会出错
+  //.get(() => this.family_name + ', ' + this.first_name);
 
 AuthorSchema
   .virtual('lifespan')
-  .get(() => this.date_of_death.getYear() - this.date_of_birth.getYear());
+  .get(function() {return this.date_of_death.getYear() - this.date_of_birth.getYear()});
 
 AuthorSchema
   .virtual('url')
-  .get(() => '/catalog/author/' + this._id);
+  .get(function() {return '/catalog/author/' + this._id});
+
+AuthorSchema
+  .virtual('date_of_birth_formatted')
+  .get(function() {return this.date_of_birth ? moment(this.date_of_birth).format('YYYY-MM-DD') : ''});
+
+AuthorSchema
+  .virtual('date_of_death_formatted')
+  .get(function() {return this.date_of_death ? moment(this.date_of_death).format('YYYY-MM-DD') : ''});
 
 //导出模型
 module.exports = mongoose.model('Author', AuthorSchema);

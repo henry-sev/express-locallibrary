@@ -13,7 +13,7 @@ const BookSchema = new Schema({
 //创建虚拟属性：url
 BookSchema
   .virtual('url')
-  .get(() => '/catalog/book/' + this._id);
+  .get(function() {return '/catalog/book/' + this._id});
 
 //导出模型
 module.exports = mongoose.model('Book', BookSchema);
