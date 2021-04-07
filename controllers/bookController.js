@@ -1,7 +1,31 @@
-var Book = require('../models/book');
+const Book = require('../models/book');
+const Author = require('../models/author');
+const Genre = require('../models/genre');
+const BookInstance = require('../models/bookinstance');
+
+const async = require('async');
 
 exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: Site Home Page');
+    //并行异步执行：计算各模型数量：Book, Author, Genre, BoookInstance
+    async.parallel({
+        book_count: function(callback) {
+            Book.count({}, callback);
+        },
+        author_count: function(callback) {
+            Author.count({}, callback);
+        },
+        genre_count: function(callback) {
+            Genre.count({}, callback);
+        },
+        book_instance_count: function(callback) {
+            BookInstance.count({}, callback);
+        },
+        book_instance_available_count: function(callback) {
+            BookInstance.count({status: 'Available'}, callback);
+        },
+    }, function(err, results) {
+        res.render('index', {title: 'Local Library Home', error: err, data: results});
+    });
 };
 
 // Display list of all books.
