@@ -9,7 +9,7 @@ const GenreSchema = new Schema({
 //创建虚拟属性：url
 GenreSchema
   .virtual('url')
-  .get(function() {return 'catalog/genre/' + this._id});
+  .get(function() {return '/catalog/genre/' + this._id});
 
 //导出模型
 module.exports = mongoose.model('Genre', GenreSchema);
