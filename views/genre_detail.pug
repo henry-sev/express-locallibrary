@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+  h1 Genre: #{genre.name}
+
+  div(style='margin-left:20px;margin-top:20px')
+    h4 Books 
+
+    dl 
+      each genre_book in genre_books 
+        dt 
+          a(href=genre_book.url) #{genre_book.title}
+        dd #{genre_book.summary}
+
+      else 
+        p This genre has no books. 
