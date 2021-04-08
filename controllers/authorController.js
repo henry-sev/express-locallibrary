@@ -13,15 +13,25 @@ exports.author_list = (req, res, next) => {
 };
 
 //为每位作者显示详细信息的页面
-exports.author_detail = (req, res) => {
+exports.author_detail = (req, res, next) => {
   async.parallel({
     author: function(callback) {
-      Author.find()
+      Author.findById(req.params.id)
+        .exec(callback)
     },
-    books: function(callback) {
-
+    book: function(callback) {
+      Book.find({'author': req.params.id})
+        .exec(callback)
     },
-  }, function() {})
+  }, function(err, results) {
+    if (err) {return next(err)}
+    if (results.author==null) {
+      let err = new Error('Author not find');
+      err.status = 404;
+      return next(err);
+    }
+    res.render('author_detail', {title: 'Author Detail', author: results.author, books: results.book})
+  });
 };
 
 //由get显示创建作者的表单
