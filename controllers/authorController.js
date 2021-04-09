@@ -78,10 +78,50 @@ exports.author_create_post = [
 ];
 
 // 由 GET 显示删除作者的表单
-exports.author_delete_get = (req, res) => { res.send('未实现：作者删除表单的 GET'); };
+exports.author_delete_get = (req, res, next) => { 
+  async.parallel({
+    author: function(callback) {
+      Author.findById(req.params.id)
+        .exec(callback)
+    },
+    author_books: function(callback) {
+      Book.find({author: req.params.id})
+        .exec(callback)
+    },
+  }, function(err, results) {
+    if (err) {return next(err)}
+
+    if (results.author==null) {
+      res.redirect('/catalog/authors');
+    }
+    res.render('author_delete', {title: 'Delete Author', author: results.author, author_books: results.author_books});
+  });
+ };
 
 // 由 POST 处理作者删除操作
-exports.author_delete_post = (req, res) => { res.send('未实现：删除作者的 POST'); };
+exports.author_delete_post = (req, res, next) => { 
+  async.parallel({
+    author: function(callback) {
+      Author.findById(req.body.authorid)
+        .exec(callback)
+    },
+    author_books: function(callback) {
+      Book.find({author: req.body.authorid})
+        .exec(callback)
+    },
+  }, function(err, results) {
+    if (err) {return next(err)}
+
+    if (results.author_books.length > 0) {
+      res.render('author_delete', {title: 'Delete Author', author: results.author, author_books: results.author_books});
+    } else {
+      Author.findByIdAndRemove(req.body.authorid, (err) => {
+        if (err) {return next(err)}
+        res.redirect('/catalog/authors');
+      });
+    } 
+  });
+ };
 
 // 由 GET 显示更新作者的表单
 exports.author_update_get = (req, res) => { res.send('未实现：作者更新表单的 GET'); };
