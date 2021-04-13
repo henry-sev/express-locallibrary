@@ -134,7 +134,7 @@ exports.author_update_get = (req, res, next) => {
       return next(err);
     } 
 
-    res.render('author_form', {title: 'Create Author', author: author});
+    res.render('author_form', {title: 'Update Author', author: author});
   })
  };
 
@@ -164,14 +164,14 @@ exports.author_update_post = [
     });
 
     if (!errors.isEmpty()) {
-      res.render('author_form', {title: 'Create Author', author: author, errors: errors.array()});
+      res.render('author_form', {title: 'Update Author', author: author, errors: errors.array()});
       return;
     } else {
       Author.findByIdAndUpdate(req.params.id, author, {}, (err, theauthor) => {
         if (err) {return next(err)}
 
         res.redirect(theauthor.url);
-      })
+      });
     }
   }
 ]
