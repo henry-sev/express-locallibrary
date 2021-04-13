@@ -12,7 +12,7 @@ const catalogRouter = require('./routes/catalog');
 var app = express();
 
 //set mongoDB connnection
-const mongoDB = 'mongodb+srv://henry:321123@locallibrary.nuh8l.mongodb.net/locallibrary?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI || 'mongodb+srv://henry:321123@locallibrary.nuh8l.mongodb.net/locallibrary?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
