@@ -9,7 +9,7 @@ block content
       select#book.form-control(type='select' name='book' required='true')
         for book in books
           if book_instance
-            option(value=book._id selected=(book._id.toString()===book_instance.book.toString() ? 'selected' : false)) #{book.title}
+            option(value=book._id selected=((book._id.toString()===book_instance.book.toString() || book._id.toString()===book_instance.book._id.toString()) ? 'selected' : false)) #{book.title}
           else
             option(value=book._id) #{book.title}
 
