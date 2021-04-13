@@ -133,7 +133,7 @@ exports.author_update_get = (req, res, next) => {
       err.status = 404;
       return next(err);
     } 
-
+    
     res.render('author_form', {title: 'Update Author', author: author});
   })
  };

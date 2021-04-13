@@ -11,9 +11,9 @@ block content
       label(for='family_name') Family Name:
       input#family_name.form-control(type='text' name='family_name' placeholder='family name (Christian) last' value=(undefined===author ? '' : author.family_name))
       label(for='date_of_birth') Date of Birth:
-      input#date_of_birth.form-control(type='date' name='date_of_birth' placeholder='mm/dd/yyyy' value=(undefined===author ? '' : author.date_of_birth))
+      input#date_of_birth.form-control(type='date' name='date_of_birth' placeholder='mm/dd/yyyy' value=(undefined===author ? '' : author.date_of_birth_formatted))
       label(for='date_of_death') Date of Death:
-      input#date_of_death.form-control(type='date' name='date_of_death' placeholder='mm/dd/yyyy' value=(undefined===author ? '' : author.date_of_death))
+      input#date_of_death.form-control(type='date' name='date_of_death' placeholder='mm/dd/yyyy' value=(undefined===author ? '' : author.date_of_death_formatted))
     button.btn.btn-primary(type='sumbit') Sumbit
 
   if errors

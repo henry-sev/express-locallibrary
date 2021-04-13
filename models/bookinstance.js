@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const { json } = require('express');
 
 //创建bookInstance模型
 const Schema = mongoose.Schema;
@@ -23,6 +24,10 @@ BookInstanceSchema
 BookInstanceSchema
   .virtual('due_back_formatted')
   .get(function() {return moment(this.due_back).format('MMMM Do, YYYY')});
+
+BookInstanceSchema
+  .virtual('due_back_formatted2')
+  .get(function() {return moment(this.due_back).format('YYYY-MM-DD')});
 
 //导出模型
 module.exports = mongoose.model('BookInstance', BookInstanceSchema);
