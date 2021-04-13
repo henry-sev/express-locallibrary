@@ -292,8 +292,6 @@ exports.book_update_post = [
         } else {
             Book.findByIdAndUpdate(req.params.id, book, {}, function(err, thebook) {
                 if (err) {return next(err)}
-
-                console.log(thebook);
                 res.redirect(thebook.url);
             });
         }
