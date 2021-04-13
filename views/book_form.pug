@@ -14,7 +14,7 @@ block content
         for author in authors
           if book
             //这里'selected'是不是可以换成true
-            option(value=author._id selected=(author._id.toString()===book.author.toString() ? 'selected': false)) #{author.name}
+            option(value=author._id selected=((author._id.toString()===book.author.toString() || author._id.toString()===book.author._id.toString()) ? 'selected': false)) #{author.name}
           else
             option(value=author._id) #{author.name}
     div.form-group
@@ -22,7 +22,7 @@ block content
       input#summary.form-control(type='text' placeholder='Summary' name='summary' value=(book===undefined ? '' : book.summary) required='true')
     div.form-group
       label(for='isbn') ISBN:
-      input#isbn.form-control(type='text' placeholder='ISBN13' name='isbn' value=(book===undefined ? '' : book.isbn) required='true')
+      input#isbn.form-control(type='text' placeholder='ISBN13' name='isbn' value=(book===undefined ? '' : book.isbn) )
     div.form-group
       label Genre:
       div
